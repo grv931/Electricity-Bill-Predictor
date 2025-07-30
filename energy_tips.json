@@ -1,0 +1,37 @@
+{
+  "general_tips": [
+    "Switch off lights, fans, and AC when leaving the room",
+    "Use 5-star BEE rated appliances for better energy efficiency",
+    "Replace old incandescent bulbs with LED lights",
+    "Unplug electronic devices when not in use to avoid phantom loads",
+    "Use power strips for multiple devices and switch them off together"
+  ],
+  "ac_tips": [
+    "Set AC temperature to 24-26\u00b0C for optimal cooling and energy saving",
+    "Clean AC filters regularly for efficient operation",
+    "Close doors and windows when AC is running",
+    "Use ceiling fans along with AC to feel cooler at higher temperatures",
+    "Install curtains/blinds to block direct sunlight"
+  ],
+  "refrigerator_tips": [
+    "Keep refrigerator temperature between 3-4\u00b0C",
+    "Don't overload the refrigerator - allow air circulation",
+    "Keep the refrigerator away from heat sources",
+    "Check and replace door seals if damaged",
+    "Defrost regularly to maintain efficiency"
+  ],
+  "water_heating_tips": [
+    "Use geyser timer to heat water only when needed",
+    "Insulate hot water pipes to reduce heat loss",
+    "Fix leaky hot water taps immediately",
+    "Take shorter showers instead of baths",
+    "Consider solar water heating systems"
+  ],
+  "lighting_tips": [
+    "Use natural light during daytime",
+    "Switch to LED bulbs - they use 75% less energy",
+    "Install motion sensors for outdoor and corridor lighting",
+    "Use task lighting instead of lighting entire rooms",
+    "Clean bulbs and fixtures regularly for better light output"
+  ]
+}

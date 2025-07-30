@@ -1,0 +1,26 @@
+{
+  "average_consumption": "100-150 kWh per month for typical household",
+  "tariff_slabs": [
+    {
+      "range": "0-100 units",
+      "rate": "\u20b97.42 per unit"
+    },
+    {
+      "range": "101-200 units",
+      "rate": "\u20b98.95 per unit"
+    },
+    {
+      "range": "Above 200 units",
+      "rate": "\u20b98.95 per unit"
+    }
+  ],
+  "fixed_charges": "\u20b980 per month for DS-II category (2-5 kW)",
+  "peak_months": [
+    "April",
+    "May",
+    "June",
+    "July",
+    "August"
+  ],
+  "average_bill": "\u20b9800-1500 per month for middle-class household"
+}

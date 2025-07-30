@@ -1,0 +1,220 @@
+{
+  "appliances": [
+    {
+      "name": "Air Conditioner (1.5 Ton)",
+      "power_watts": 1400,
+      "typical_hours_day": 8,
+      "usage_months": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "name": "Refrigerator",
+      "power_watts": 150,
+      "typical_hours_day": 24,
+      "usage_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Ceiling Fan",
+      "power_watts": 70,
+      "typical_hours_day": 12,
+      "usage_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "LED TV",
+      "power_watts": 80,
+      "typical_hours_day": 6,
+      "usage_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Washing Machine",
+      "power_watts": 500,
+      "typical_hours_day": 1,
+      "usage_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Water Heater/Geyser",
+      "power_watts": 2000,
+      "typical_hours_day": 1,
+      "usage_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "Microwave",
+      "power_watts": 1200,
+      "typical_hours_day": 0.5,
+      "usage_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Laptop",
+      "power_watts": 65,
+      "typical_hours_day": 8,
+      "usage_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "LED Lights (5 bulbs)",
+      "power_watts": 50,
+      "typical_hours_day": 6,
+      "usage_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Iron",
+      "power_watts": 1000,
+      "typical_hours_day": 0.5,
+      "usage_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Water Pump",
+      "power_watts": 750,
+      "typical_hours_day": 2,
+      "usage_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Inverter/UPS",
+      "power_watts": 200,
+      "typical_hours_day": 24,
+      "usage_months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ]
+}

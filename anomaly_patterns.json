@@ -1,0 +1,30 @@
+{
+  "sudden_spike": {
+    "description": "Consumption increased by >50% compared to previous month",
+    "possible_causes": [
+      "New high-power appliance",
+      "AC left running",
+      "Water heater malfunction",
+      "Electricity theft in meter"
+    ],
+    "suggestion": "Check for new appliances or equipment left on continuously"
+  },
+  "gradual_increase": {
+    "description": "Consumption steadily increasing over 3+ months",
+    "possible_causes": [
+      "Aging appliances becoming less efficient",
+      "Seasonal change",
+      "Changed usage patterns"
+    ],
+    "suggestion": "Consider servicing old appliances or replacing with energy-efficient models"
+  },
+  "sudden_drop": {
+    "description": "Consumption decreased by >30% compared to previous month",
+    "possible_causes": [
+      "Major appliance stopped working",
+      "Extended vacation",
+      "Changed living situation"
+    ],
+    "suggestion": "Verify if any major appliances need repair or replacement"
+  }
+}

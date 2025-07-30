@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔌 Smart Electricity Bill Predictor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>🔌 Smart Bill Predictor</h2>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-page="home">
+                    ⚡ Bill Prediction
+                </button>
+                <button class="nav-item" data-page="analysis">
+                    📊 Usage Analysis
+                </button>
+                <button class="nav-item" data-page="tips">
+                    💡 Energy Tips
+                </button>
+                <button class="nav-item" data-page="about">
+                    ℹ️ About
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="app-header">
+                <h1>🔌 Smart Electricity Bill Predictor</h1>
+                <p class="subtitle">Predict your next month's bill using Machine Learning</p>
+            </header>
+
+            <!-- Home Page - Bill Prediction -->
+            <section id="home" class="page active">
+                <div class="content-grid">
+                    <!-- Input Section -->
+                    <div class="card input-section">
+                        <div class="card__body">
+                            <h3>Historical Data Input</h3>
+                            <p class="text-secondary">Enter your past 6-12 months of electricity consumption data</p>
+                            
+                            <!-- Input Method Toggle -->
+                            <div class="input-toggle">
+                                <button class="btn btn--secondary toggle-btn active" data-mode="manual">Manual Entry</button>
+                                <button class="btn btn--outline toggle-btn" data-mode="csv">CSV Upload</button>
+                            </div>
+
+                            <!-- Manual Entry -->
+                            <div id="manual-input" class="input-mode">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Month</label>
+                                        <input type="month" class="form-control" id="month-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Units Consumed (kWh)</label>
+                                        <input type="number" class="form-control" id="units-input" placeholder="e.g., 175">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Bill Amount (₹)</label>
+                                        <input type="number" class="form-control" id="amount-input" placeholder="e.g., 1500">
+                                    </div>
+                                    <button class="btn btn--primary" id="add-data-btn">Add Data</button>
+                                </div>
+                                
+                                <div class="data-table-container">
+                                    <table class="data-table" id="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Month</th>
+                                                <th>Units (kWh)</th>
+                                                <th>Amount (₹)</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="data-body">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <button class="btn btn--outline" id="load-sample-btn">Load Sample Data</button>
+                            </div>
+
+                            <!-- CSV Upload -->
+                            <div id="csv-input" class="input-mode hidden">
+                                <div class="upload-area">
+                                    <input type="file" id="csv-file" accept=".csv" class="file-input">
+                                    <label for="csv-file" class="upload-label">
+                                        📁 Drop CSV file here or click to browse
+                                        <span class="upload-hint">Expected format: month, units_consumed, bill_amount</span>
+                                    </label>
+                                </div>
+                                <a href="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/34650397ad355264945e90a9fc734ec7/03ebf597-3c38-4860-ba0f-859d22a9bef0/cb8ef97f.csv" 
+                                   target="_blank" class="btn btn--outline">Download Sample CSV</a>
+                            </div>
+
+                            <!-- Model Selection -->
+                            <div class="model-selection">
+                                <h4>ML Model Selection</h4>
+                                <div class="model-options">
+                                    <label class="radio-option">
+                                        <input type="radio" name="model" value="linear" checked>
+                                        <span class="radio-label">Linear Regression</span>
+                                        <small>Fast, interpretable, good for linear patterns</small>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="model" value="forest">
+                                        <span class="radio-label">Random Forest</span>
+                                        <small>More accurate, handles non-linear patterns</small>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button class="btn btn--primary btn--lg btn--full-width" id="predict-btn" disabled>
+                                🔮 Predict Next Month's Bill
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div class="card results-section">
+                        <div class="card__body">
+                            <div id="no-results" class="no-results">
+                                <div class="empty-state">
+                                    <h3>⚡ Ready to Predict</h3>
+                                    <p>Add your historical data and click predict to see your next month's electricity bill forecast.</p>
+                                </div>
+                            </div>
+
+                            <div id="prediction-results" class="prediction-results hidden">
+                                <h3>📊 Prediction Results</h3>
+                                
+                                <div class="prediction-card">
+                                    <div class="prediction-main">
+                                        <h4>Next Month's Predicted Bill</h4>
+                                        <div class="prediction-amount">₹<span id="predicted-amount">0</span></div>
+                                        <div class="prediction-units">
+                                            Estimated Units: <span id="predicted-units">0</span> kWh
+                                        </div>
+                                        <div class="confidence-interval">
+                                            Range: ₹<span id="min-amount">0</span> - ₹<span id="max-amount">0</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="prediction-metrics">
+                                        <div class="metric">
+                                            <label>Model Accuracy</label>
+                                            <span id="accuracy">0%</span>
+                                        </div>
+                                        <div class="metric">
+                                            <label>Trend</label>
+                                            <span id="trend" class="status">Stable</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="chart-container" style="position: relative; height: 300px;">
+                                    <canvas id="prediction-chart"></canvas>
+                                </div>
+
+                                <div class="insights-section">
+                                    <h4>💡 Insights & Recommendations</h4>
+                                    <div id="insights-list" class="insights-list">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Usage Analysis Page -->
+            <section id="analysis" class="page">
+                <div class="page-header">
+                    <h2>📊 Usage Analysis</h2>
+                    <p>Detailed analysis of your electricity consumption patterns</p>
+                </div>
+
+                <div class="analysis-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Consumption Trends</h3>
+                            <div class="chart-container" style="position: relative; height: 350px;">
+                                <canvas id="trend-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Seasonal Patterns</h3>
+                            <div class="seasonal-stats">
+                                <div class="season-stat">
+                                    <span class="season-label">Peak Months</span>
+                                    <span class="season-value">Apr - Aug</span>
+                                </div>
+                                <div class="season-stat">
+                                    <span class="season-label">Low Months</span>
+                                    <span class="season-value">Nov - Feb</span>
+                                </div>
+                            </div>
+                            <div class="chart-container" style="position: relative; height: 250px;">
+                                <canvas id="seasonal-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Appliance Breakdown</h3>
+                            <div class="appliance-list" id="appliance-list">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>⚠️ Anomaly Detection</h3>
+                            <div id="anomaly-alerts" class="anomaly-alerts">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Energy Tips Page -->
+            <section id="tips" class="page">
+                <div class="page-header">
+                    <h2>💡 Energy Saving Tips</h2>
+                    <p>Personalized recommendations to reduce your electricity bill</p>
+                </div>
+
+                <div class="tips-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>🏠 General Tips</h3>
+                            <div id="general-tips" class="tips-list">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>❄️ Air Conditioning</h3>
+                            <div id="ac-tips" class="tips-list">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>🧊 Refrigerator</h3>
+                            <div id="fridge-tips" class="tips-list">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card savings-calculator">
+                        <div class="card__body">
+                            <h3>💰 Savings Calculator</h3>
+                            <div class="calculator-form">
+                                <div class="form-group">
+                                    <label class="form-label">Current Monthly Bill (₹)</label>
+                                    <input type="number" class="form-control" id="current-bill" placeholder="e.g., 2000">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Expected Savings (%)</label>
+                                    <input type="range" class="range-input" id="savings-percent" min="5" max="30" value="15">
+                                    <span id="savings-display">15%</span>
+                                </div>
+                                <div class="savings-result">
+                                    <div class="savings-amount">
+                                        Monthly Savings: ₹<span id="monthly-savings">0</span>
+                                    </div>
+                                    <div class="yearly-savings">
+                                        Yearly Savings: ₹<span id="yearly-savings">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Page -->
+            <section id="about" class="page">
+                <div class="page-header">
+                    <h2>ℹ️ About</h2>
+                    <p>Learn how this electricity bill predictor works</p>
+                </div>
+
+                <div class="about-content">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>🤖 How It Works</h3>
+                            <p>This application uses machine learning algorithms to analyze your historical electricity consumption patterns and predict future bills. It considers factors like seasonal variations, usage trends, and appliance efficiency.</p>
+                            
+                            <h4>Machine Learning Models</h4>
+                            <ul>
+                                <li><strong>Linear Regression:</strong> Best for consistent usage patterns and quick predictions</li>
+                                <li><strong>Random Forest:</strong> Better for complex, non-linear consumption patterns</li>
+                            </ul>
+
+                            <h4>Bihar Electricity Tariff</h4>
+                            <div class="tariff-info">
+                                <div class="tariff-slab">
+                                    <span>0-100 units:</span>
+                                    <span>₹7.42 per unit</span>
+                                </div>
+                                <div class="tariff-slab">
+                                    <span>101-200 units:</span>
+                                    <span>₹8.95 per unit</span>
+                                </div>
+                                <div class="tariff-slab">
+                                    <span>200+ units:</span>
+                                    <span>₹8.95 per unit</span>
+                                </div>
+                                <div class="tariff-slab">
+                                    <span>Fixed Charge:</span>
+                                    <span>₹80 per month</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>📊 Features</h3>
+                            <ul>
+                                <li>✅ Historical data analysis (6-12 months)</li>
+                                <li>✅ Machine learning predictions</li>
+                                <li>✅ Seasonal pattern detection</li>
+                                <li>✅ Anomaly detection alerts</li>
+                                <li>✅ Energy-saving recommendations</li>
+                                <li>✅ Bihar state tariff calculations</li>
+                                <li>✅ CSV data import/export</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
